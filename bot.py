@@ -143,7 +143,11 @@ async def comparps(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
 def main():
     """Start the bot"""
-    application = Application.builder().token(TELEGRAM_TOKEN).build()
+    from telegram.request import HTTPXRequest
+    
+    # Use Tor SOCKS5 proxy
+    request = HTTPXRequest(proxy="socks5://127.0.0.1:9050")
+    application = Application.builder().token(TELEGRAM_TOKEN).request(request).build()
     
     application.add_handler(CommandHandler("start", start))
     application.add_handler(CommandHandler("roastmore", roastmore))
